@@ -8,6 +8,8 @@ src/config/database.js: Configuração da conexão com o MySQL.
 
 src/routes/userRoutes.js: Rotas que implementam o CRUD para a tabela users
 
+Estrutura completa do projeto
+
 api-crud-mysql/
 ├── package.json
 ├── package-lock.json
