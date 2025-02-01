@@ -29,9 +29,6 @@ TIMESTAMP → Tipo de dado, que armazena data e hora.
 DEFAULT CURRENT_TIMESTAMP → Define um valor padrão para a coluna, preenchendo automaticamente com a data e hora do momento em que o registro foi inserido na tabela.
 */
 
-
-
-
 Quais são os tipos de dados apropriados para colunas como endereço, e-mail, telefone e celular, para base de dados SQL?
 
 Razão Social VARCHAR(255)
@@ -59,4 +56,3 @@ Exemplo: Vou inserir a palavra "Yuran" que contém 5 caracteres em uma coluna VA
 Na coluna VARCHAR vai ser utilizado apenas 5 caracteres dos 20, o tamanho daquele registro vai ser igual ao de um CHAR(5).
 
 Na coluna CHAR vai ser utilizado todos os 20 caracteres independente do tamanho do registro ficando com CHAR(20) e pesando mais no banco.
-
