@@ -1,4 +1,5 @@
-Estrutura básica de uma API em Node.js utilizando o Express, que é um dos frameworks mais populares para criar APIs. Essa estrutura serve como ponto de partida para projetos simples e escaláveis.
+Estrutura básica de uma API em Node.js utilizando o Express, que é um dos frameworks mais populares para criar APIs. 
+Essa estrutura serve como ponto de partida para projetos simples e escaláveis.
 
 my-api/
 ├── package.json
