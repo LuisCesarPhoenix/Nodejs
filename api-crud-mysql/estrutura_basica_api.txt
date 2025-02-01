@@ -15,7 +15,6 @@ my-api/
 │       └── database.js
 └── .gitignore
 
-
 1. Inicializar o projeto
 No terminal, crie a pasta do projeto e inicialize o Node.js:
 
@@ -31,7 +30,6 @@ b - Opcional: Instale o nodemon para reiniciar o servidor automaticamente durant
 Dependências opcionais (para facilitar desenvolvimento e organização):
  - npm install nodemon --save-dev
  - npm install mongoose cors
-
 
 2. Criar o arquivo principal server.js
 Esse arquivo é o ponto de entrada da sua aplicação:
@@ -56,7 +54,6 @@ app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-
 3. Criar rotas (src/routes/exampleRoutes.js)
 Organizamos as rotas separadamente para manter o código limpo:
 
@@ -72,7 +69,6 @@ router.post('/', exampleController.createExample);
 
 module.exports = router;
 
-
 4. Criar controllers (src/controllers/exampleController.js)
 Os controllers contêm a lógica de negócios da API.
 
@@ -87,7 +83,6 @@ exports.createExample = (req, res) => {
   res.status(201).json({ message: `Exemplo criado com sucesso!`, data: { name } });
 };
 
-
 5. Criar modelos (src/models/exampleModel.js)
 Se for usar um banco de dados (por exemplo, MongoDB), aqui você pode definir os schemas:
 
@@ -99,7 +94,6 @@ const ExampleSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Example', ExampleSchema);
-
 
 6. Configuração de banco de dados (src/config/database.js)
 Se for usar um banco de dados (como o MongoDB), configure a conexão aqui:
@@ -121,18 +115,15 @@ const connectDB = async () => {
 
 module.exports = connectDB;
 
-
 E não se esqueça de chamar essa função no server.js:
 const connectDB = require('./src/config/database');
 connectDB();
-
 
 7. Variáveis de ambiente (.env)
 Crie um arquivo .env para armazenar informações sensíveis, como a porta do servidor ou URL do banco de dados:
 
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/mydb
-
 
 Comando para rodar o servidor
 Se instalou o nodemon, use: npx nodemon server.js
