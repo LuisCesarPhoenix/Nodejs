@@ -1,14 +1,20 @@
 O que cada pasta/arquivo faz?
 
-server.js: É o arquivo principal que inicializa o servidor e carrega as rotas.
+api-crud-mysql/: Diretório raiz que contém todo o projeto e sua estrutura de pastas e arquivos.
 
-.env: Contém as variáveis de ambiente, como credenciais do banco de dados.
+package.json: Lista dependências, scripts e configurações essenciais do projeto.
 
-src/config/database.js: Configuração da conexão com o MySQL.
+package-lock.json: Garante a instalação consistente das versões exatas das dependências.
 
-src/routes/userRoutes.js: Rotas que implementam o CRUD para a tabela users
+server.js: Inicia o servidor, configura middlewares e integra as rotas do app.
 
-Estrutura completa do projeto
+.env: Armazena variáveis de ambiente e configurações sensíveis fora do código-fonte, como credenciais do banco de dados.
+
+src/config/database.js: Configura a conexão com o banco de dados MySQL utilizado no projeto.
+
+src/routes/userRoutes.js: Define os endpoints e mapeia as rotas para operações de usuários, como o CRUD para a tabela users.
+
+src/controllers/userController.js: Contém a lógica dos endpoints para criar, ler, atualizar e deletar usuários.
 
 api-crud-mysql/
 ├── package.json
@@ -20,3 +26,6 @@ api-crud-mysql/
 │   │   └── database.js
 │   ├── routes/
 │   │   └── userRoutes.js
+│   └── controllers/
+│       └── userController.js
+└── 
