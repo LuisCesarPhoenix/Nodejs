@@ -1,0 +1,139 @@
+Estrutura básica de uma API em Node.js utilizando o Express, que é um dos frameworks mais populares para criar APIs. Essa estrutura serve como ponto de partida para projetos simples e escaláveis.
+
+my-api/
+├── package.json
+├── server.js
+├── src/
+│   ├── controllers/
+│   │   └── exampleController.js
+│   ├── routes/
+│   │   └── exampleRoutes.js
+│   ├── models/
+│   │   └── exampleModel.js
+│   └── config/
+│       └── database.js
+└── .gitignore
+
+
+1. Inicializar o projeto
+No terminal, crie a pasta do projeto e inicialize o Node.js:
+
+mkdir my-api
+cd my-api
+npm init -y
+
+a - Instale o Express para criar o servidor e dotenv para configurar variáveis de ambiente:
+Instale as dependências principais:
+ - npm install express dotenv
+
+b - Opcional: Instale o nodemon para reiniciar o servidor automaticamente durante o desenvolvimento:
+Dependências opcionais (para facilitar desenvolvimento e organização):
+ - npm install nodemon --save-dev
+ - npm install mongoose cors
+
+
+2. Criar o arquivo principal server.js
+Esse arquivo é o ponto de entrada da sua aplicação:
+
+require('dotenv').config(); // Para usar variáveis de ambiente
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middlewares
+app.use(express.json());
+app.use(cors());
+
+// Rotas principais
+const exampleRoutes = require('./src/routes/exampleRoutes');
+app.use('/api/example', exampleRoutes);
+
+// Iniciar o servidor
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
+
+
+3. Criar rotas (src/routes/exampleRoutes.js)
+Organizamos as rotas separadamente para manter o código limpo:
+
+const express = require('express');
+const router = express.Router();
+
+// Importar o controller
+const exampleController = require('../controllers/exampleController');
+
+// Definir as rotas
+router.get('/', exampleController.getExamples);
+router.post('/', exampleController.createExample);
+
+module.exports = router;
+
+
+4. Criar controllers (src/controllers/exampleController.js)
+Os controllers contêm a lógica de negócios da API.
+
+// Retorna todos os exemplos
+exports.getExamples = (req, res) => {
+  res.json({ message: 'Retornando todos os exemplos!' });
+};
+
+// Cria um novo exemplo
+exports.createExample = (req, res) => {
+  const { name } = req.body;
+  res.status(201).json({ message: `Exemplo criado com sucesso!`, data: { name } });
+};
+
+
+5. Criar modelos (src/models/exampleModel.js)
+Se for usar um banco de dados (por exemplo, MongoDB), aqui você pode definir os schemas:
+
+const mongoose = require('mongoose');
+
+const ExampleSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+module.exports = mongoose.model('Example', ExampleSchema);
+
+
+6. Configuração de banco de dados (src/config/database.js)
+Se for usar um banco de dados (como o MongoDB), configure a conexão aqui:
+
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Banco de dados conectado!');
+  } catch (error) {
+    console.error('Erro ao conectar ao banco de dados:', error);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+
+
+E não se esqueça de chamar essa função no server.js:
+const connectDB = require('./src/config/database');
+connectDB();
+
+
+7. Variáveis de ambiente (.env)
+Crie um arquivo .env para armazenar informações sensíveis, como a porta do servidor ou URL do banco de dados:
+
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/mydb
+
+
+Comando para rodar o servidor
+Se instalou o nodemon, use: npx nodemon server.js
+
+Caso contrário: node server.js
