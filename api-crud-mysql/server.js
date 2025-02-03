@@ -75,6 +75,7 @@ console.log(produtos[0]); // Saída: Objeto { produto: "TV", valor: "R$ 3000" }
 console.log(produtos[0].produto); // Saída: TV
 console.log(produtos[0].valor); // Saída: R$ 3000
 
+
 /* Como testar no Insomnia ou navegador?
 Inicie o servidor (se ainda não estiver rodando): digite node server.js
 Se estiver usando nodemon: digite npx nodemon server.js
@@ -82,14 +83,14 @@ Se estiver usando nodemon: digite npx nodemon server.js
 Abra o navegador e acesse os endpoints:
 
 Lista de frutas:
-http://localhost:3000/api/frutas
+👉 http://localhost:3000/api/frutas
 Resposta esperada (JSON):
 {
   "frutas": ["Maçãs", "Bananas", "Leite"]
 }
 
 Lista de produtos:
-http://localhost:3000/api/produtos
+👉 http://localhost:3000/api/produtos
 Resposta esperada (JSON):
 {
   "produtos": [
@@ -121,3 +122,6 @@ Essa linha faz o servidor "escutar" a porta definida na variável PORT. Quando o
 ele exibirá no console a mensagem indicando que está ativo e rodando na URL configurada 
 (http://localhost:3000 ou outra porta, dependendo do ambiente).
 */
+
+
+        
