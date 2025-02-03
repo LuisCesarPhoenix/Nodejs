@@ -1,9 +1,12 @@
+//As rotas (userRoutes.js) devem apenas definir os endpoints e encaminhar as requisições.
+
+
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController'); // Importando o controller
+const userController = require('../controllers/userController'); // Importando o controller do arquivo userController.js
 
 // Rota para login (autenticação do usuário)
-/*router.post('/login', async (req, res) => {
+/* router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -24,8 +27,7 @@ const userController = require('../controllers/userController'); // Importando o
 });
 */
 
-/*
-router.post('/login', async (req, res) => {
+/* router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -82,5 +84,7 @@ router.get('/:id', userController.getUserById); // READ ONE - Buscar um usuário
 router.put('/:id', userController.updateUser); // UPDATE - Atualizar um usuário
 
 router.delete('/:id', userController.deleteUser); // DELETE - Remover um usuário
+
+router.post('/:login', userController.authenticateUser); // LOGIN - Fazer login e autenticar um usuário 
 
 module.exports = router;
