@@ -1,8 +1,17 @@
 const bcrypt = require('bcrypt');
+/* Esta linha importa o módulo bcrypt, que é uma biblioteca usada para criptografar senhas de forma segura.
+O bcrypt permite hashing de senhas antes de armazená-las no banco de dados, tornando-as mais seguras contra ataques de força bruta.
+Também é usado para comparar uma senha fornecida com um hash armazenado, garantindo que apenas usuários com a senha correta possam se autenticar.
+*/
+
 const db = require('../config/database');
+/* Esta linha importa o arquivo de configuração do banco de dados (database.js ou similar), que contém a conexão com o MySQL.
+Ele permite que o código acesse o banco de dados e execute consultas SQL, como inserir, buscar, atualizar e deletar usuários.
+Normalmente, esse arquivo contém a configuração da biblioteca mysql ou mysql2, especificando o host, usuário, senha e nome do banco de dados.
+*/
 
 // Criar usuário
-const createUser = async (req, res) => {
+/* const createUser = async (req, res) => {
     const { name, username, email, password } = req.body;
 
     if (!name || !username || !email || !password) {
@@ -25,6 +34,37 @@ const createUser = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ error: 'Erro ao processar requisição', details: error });
+    }
+};
+*/
+
+const createUser = async (req, res) => {
+    const { name, username, email, password } = req.body;
+
+    if (!name || !username || !email || !password) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios!' });
+    }
+
+    try {
+        // Verifica se a senha não está vazia antes de criptografar
+        if (!password.trim()) {
+            return res.status(400).json({ error: 'A senha não pode estar vazia!' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const sql = 'INSERT INTO users (name, username, email, password) VALUES (?, ?, ?, ?)';
+        const values = [name, username, email, hashedPassword];
+
+        db.query(sql, values, (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: 'Erro ao criar usuário', details: err });
+            }
+            res.status(201).json({ message: 'Usuário criado com sucesso!', id: result.insertId });
+        });
+
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao processar requisição', details: error.message });
     }
 };
 
@@ -188,6 +228,8 @@ const authenticateUser = async (email, password) => {
 };
 */
 
+/*
+// Função para autenticar usuário
 const authenticateUser = async (email, password) => {
     console.log('Chamando authenticateUser para:', email);
 
@@ -216,6 +258,38 @@ const authenticateUser = async (email, password) => {
                 resolve(isPasswordValid);
             } catch (error) {
                 console.error('Erro ao comparar senha:', error);
+                reject(new Error('Erro ao comparar senha'));
+            }
+        });
+    });
+};
+*/
+
+const authenticateUser = async (email, password) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM users WHERE email = ?';
+
+        db.query(sql, [email], async (err, results) => {
+            if (err) {
+                console.error('Erro na consulta:', err);
+                return reject(new Error('Erro na consulta ao banco de dados'));
+            }
+
+            if (results.length === 0) {
+                return resolve(false); // Usuário não encontrado
+            }
+
+            const user = results[0];
+
+            // Verifica se a senha armazenada é válida
+            if (!user.password) {
+                return reject(new Error('Senha inválida no banco de dados'));
+            }
+
+            try {
+                const isPasswordValid = await bcrypt.compare(password, user.password);
+                resolve(isPasswordValid);
+            } catch (error) {
                 reject(new Error('Erro ao comparar senha'));
             }
         });
