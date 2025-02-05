@@ -1,15 +1,16 @@
 const { mongoA, mongoB } = require('../config/mongoConfig');
 
-const COLLECTION = process.env.MONGO_COLLECTION;
+const COLLECTION_OLD = process.env.MONGO_COLLECTION_OLD;
+const COLLECTION_NEW = process.env.MONGO_COLLECTION_NEW;
 const BATCH_SIZE = parseInt(process.env.BATCH_SIZE, 10) || 1000;
 
 // Criar modelos de banco de dados dinamicamente
-const OldCollection = mongoA.model(COLLECTION, new mongoA.base.Schema({}, { strict: false }));
-const NewCollection = mongoB.model(COLLECTION, new mongoB.base.Schema({}, { strict: false }));
+const OldCollection = mongoA.model(COLLECTION_OLD, new mongoA.base.Schema({}, { strict: false }));
+const NewCollection = mongoB.model(COLLECTION_NEW, new mongoB.base.Schema({}, { strict: false }));
 
 async function migrateData(req, res) {
   try {
-    console.log(`🔄 Iniciando migração da coleção "${COLLECTION}"...`);
+    console.log(`🔄 Iniciando migração da coleção "${COLLECTION_OLD}" para "${COLLECTION_NEW}"...`);
 
     let totalMigrated = 0;
     const cursor = OldCollection.find().cursor(); // Criar cursor para leitura eficiente
