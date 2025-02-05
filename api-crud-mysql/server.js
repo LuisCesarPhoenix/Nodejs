@@ -23,10 +23,12 @@ para Node.js que facilita a criação de APIs e servidores. Ao importar o Expres
 configurar middlewares, manipular requisições e respostas, entre outras funcionalidades.
 */
 
+const connection = require('./src/config/database'); // Conexão MySQL
+
 const userRoutes = require('./src/routes/userRoutes'); // Importa as rotas de usuário
 // Importa as rotas definidas no arquivo 'userRoutes.js' dentro da pasta 'src/routes'
 
-const connection = require('./src/config/database'); // Conexão MySQL
+const migrationRoutes = require('./src/routes/migrationRoutes');
 
 const app = express(); // Inicializa o servidor Express
 /*Aqui você está criando uma instância do Express, que é o framework para aplicações web em Node.js. 
@@ -46,6 +48,8 @@ Isso é necessário para trabalhar com APIs que enviam ou recebem dados JSON.
 
 app.use('/api/users', userRoutes); 
 // Define que todas as requisições para '/api/users' serão tratadas pelas rotas importadas
+
+app.use('/api/migration', migrationRoutes);
 
 const frutas = ['Maçãs', 'Bananas', 'Leite']; // Array de strings 
 const produtos = [ // Array de Objetos
