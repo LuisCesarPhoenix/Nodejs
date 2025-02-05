@@ -14,6 +14,3 @@ mongoA.on('connected', () => console.log(`✅ Conectado ao MongoDB remoto: ${pro
 mongoB.on('connected', () => console.log(`✅ Conectado ao MongoDB local: ${process.env.MONGO_URI_NEW}/${process.env.MONGO_DB_NEW}`));
 
 module.exports = { mongoA, mongoB };
-
-
-
