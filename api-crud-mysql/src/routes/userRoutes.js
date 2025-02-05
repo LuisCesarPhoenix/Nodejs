@@ -4,6 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController'); // Importando o controller do arquivo userController.js
+const connection = require('../config/database');
 
 // Rota para login (autenticação do usuário)
 /* router.post('/login', async (req, res) => {
@@ -48,7 +49,7 @@ const userController = require('../controllers/userController'); // Importando o
     }
 });
 */
-
+ 
 router.post('/login', async (req, res) => {
     console.log('Rota /login foi chamada');
 
