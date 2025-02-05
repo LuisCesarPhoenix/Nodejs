@@ -228,7 +228,7 @@ const authenticateUser = async (email, password) => {
 };
 */
 
-/*
+
 // Função para autenticar usuário
 const authenticateUser = async (email, password) => {
     console.log('Chamando authenticateUser para:', email);
@@ -263,8 +263,8 @@ const authenticateUser = async (email, password) => {
         });
     });
 };
-*/
 
+/*
 const authenticateUser = async (email, password) => {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT * FROM users WHERE email = ?';
@@ -295,6 +295,7 @@ const authenticateUser = async (email, password) => {
         });
     });
 };
+*/
 
 module.exports = { 
     createUser, 
@@ -304,3 +305,5 @@ module.exports = {
     deleteUser,
     authenticateUser  
 };
+
+// Eu posso criar um agendamento automático com node-cron para rodar a migração em horários específicos.
