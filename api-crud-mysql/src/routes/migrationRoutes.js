@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { migrateUsers } = require('../controllers/migrationController');
+const { migrateData } = require('../controllers/migrationController');
 
-router.get('/migrate', migrateUsers);
+router.get('/migrate', migrateData);
 
 module.exports = router;
+
