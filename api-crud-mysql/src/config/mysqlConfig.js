@@ -1,16 +1,28 @@
-/* src/config/mysqlConfig.js (Conexão MySQL sob demanda)
- Cria a conexão só quando necessário e fecha após a requisição.
-*/
-const mysql = require('mysql2/promise');
+// src/config/mysqlConfig.js (Conexão MySQL sob demanda)
+// Cria a conexão só quando necessário e fecha após a requisição. 
 
-async function connectToMySQL() {
+const mysql = require("mysql2/promise");
+require("dotenv").config();
+
+async function queryDatabase(query, params = []) {
   const connection = await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DB,
   });
-  return connection;
+
+  try {
+    const [rows] = await connection.execute(query, params);
+    return rows;
+  } catch (error) {
+    console.error("❌ Erro no MySQL:", error);
+    throw error;
+  } finally {
+    await connection.end();
+    console.log("🔌 Conexão com MySQL fechada.");
+  }
 }
 
-module.exports = { connectToMySQL };
+module.exports = { queryDatabase };
+
