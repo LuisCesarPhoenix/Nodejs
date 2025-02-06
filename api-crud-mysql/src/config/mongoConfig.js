@@ -1,16 +1,11 @@
-// O arquivo src/config/mongoConfig.js vai armazenar as conexões com os dois bancos:
+// src/config/mongoConfig.js (Conexão MongoDB sob demanda)
+// Conecta e fecha após cada requisição.
+const { MongoClient } = require('mongodb');
 
-require('dotenv').config();
-const mongoose = require('mongoose');
+async function connectToMongoDB() {
+  const client = new MongoClient(process.env.MONGO_URI);
+  await client.connect();
+  return client;
+}
 
-// Conectar ao MongoDB remoto (servidor antigo)
-const mongoA = mongoose.createConnection(`${process.env.MONGO_URI_OLD}/${process.env.MONGO_DB_OLD}`);
-
-// Conectar ao MongoDB local (servidor novo)
-const mongoB = mongoose.createConnection(`${process.env.MONGO_URI_NEW}/${process.env.MONGO_DB_NEW}`);
-
-// Exibir mensagens de conexão no console
-mongoA.on('connected', () => console.log(`✅ Conectado ao MongoDB remoto: ${process.env.MONGO_URI_OLD}/${process.env.MONGO_DB_OLD}`));
-mongoB.on('connected', () => console.log(`✅ Conectado ao MongoDB local: ${process.env.MONGO_URI_NEW}/${process.env.MONGO_DB_NEW}`));
-
-module.exports = { mongoA, mongoB };
+module.exports = { connectToMongoDB };
