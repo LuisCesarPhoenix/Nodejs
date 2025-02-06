@@ -1,35 +1,39 @@
-const { mongoA, mongoB } = require('../config/mongoConfig');
+// src/controllers/migrationController.js (Migração com conexão sob demanda)
+// A conexão é aberta apenas na migração e fechada no final
+const { connectToMongoDB } = require('../config/mongoConfig');
 
 const COLLECTION_OLD = process.env.MONGO_COLLECTION_OLD;
 const COLLECTION_NEW = process.env.MONGO_COLLECTION_NEW;
 const BATCH_SIZE = parseInt(process.env.BATCH_SIZE, 10) || 1000;
 
-// Criar modelos de banco de dados dinamicamente
-const OldCollection = mongoA.model(COLLECTION_OLD, new mongoA.base.Schema({}, { strict: false }));
-const NewCollection = mongoB.model(COLLECTION_NEW, new mongoB.base.Schema({}, { strict: false }));
-
 async function migrateData(req, res) {
+  let client;
   try {
     console.log(`🔄 Iniciando migração da coleção "${COLLECTION_OLD}" para "${COLLECTION_NEW}"...`);
+    
+    client = await connectToMongoDB(); // 🔴 Conecta ao MongoDB
+    const dbA = client.db(process.env.MONGO_DB_A);
+    const dbB = client.db(process.env.MONGO_DB_B);
+
+    const oldCollection = dbA.collection(COLLECTION_OLD);
+    const newCollection = dbB.collection(COLLECTION_NEW);
 
     let totalMigrated = 0;
-    const cursor = OldCollection.find().cursor(); // Criar cursor para leitura eficiente
+    const cursor = oldCollection.find();
     let batch = [];
 
     for await (const doc of cursor) {
-      batch.push(doc.toObject());
-
+      batch.push(doc);
       if (batch.length >= BATCH_SIZE) {
-        await NewCollection.insertMany(batch);
+        await newCollection.insertMany(batch);
         totalMigrated += batch.length;
         console.log(`✅ ${totalMigrated} registros migrados...`);
-        batch = []; // Esvazia o batch para o próximo lote
+        batch = [];
       }
     }
 
-    // Inserir os últimos registros (se houver menos de BATCH_SIZE no final)
     if (batch.length > 0) {
-      await NewCollection.insertMany(batch);
+      await newCollection.insertMany(batch);
       totalMigrated += batch.length;
       console.log(`✅ ${totalMigrated} registros migrados no total!`);
     }
@@ -40,6 +44,8 @@ async function migrateData(req, res) {
   } catch (error) {
     console.error("❌ Erro na migração:", error);
     res.status(500).json({ error: 'Erro ao migrar os dados' });
+  } finally {
+    if (client) await client.close(); // 🔴 Fecha a conexão
   }
 }
 
