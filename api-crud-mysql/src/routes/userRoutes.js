@@ -14,7 +14,7 @@ const { getUsers } = require('../controllers/userController');
 /*
 Aqui estamos importando a função getUsers do arquivo userController.js, que está localizado na pasta controllers.
 O que isso significa?
-getUsers provavelmente contém a lógica para buscar usuários de um banco de dados e retornar os dados como resposta.
+getUsers contém a lógica para buscar usuários de um banco de dados e retornar os dados como resposta.
 { getUsers } usa desestruturação, o que significa que estamos extraindo essa função específica do módulo userController.
 */
 
