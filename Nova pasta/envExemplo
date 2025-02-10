@@ -1,0 +1,19 @@
+PORT=3000
+
+# Configuração MySQL
+DB_HOST=localhost
+DB_USER=*****
+DB_PASSWORD=******
+DB_NAME=teste
+
+# Configuração MongoDB
+MONGO_URI_OLD=mongodb://usuario:senha@111.111.11.1:27017
+MONGO_DB_OLD=servidor_B
+MONGO_URI_NEW=mongodb://localhost:27017
+MONGO_DB_NEW=servidor_A
+MONGO_COLLECTION_OLD=cadastro_B
+MONGO_COLLECTION_NEW=cadastro_A
+
+# Lote de migração
+BATCH_SIZE=1000
+

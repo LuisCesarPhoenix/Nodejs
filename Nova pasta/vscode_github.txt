@@ -1,0 +1,36 @@
+Se você já tem a pasta no seu computador e no GitHub, você pode conectar os dois usando Git. 
+
+1. Abra o VS Code e o Terminal
+No VS Code, abra a pasta do seu projeto e abra o terminal (Ctrl + ou vá em Terminal > Novo Terminal).
+
+2. Inicialize o repositório localmente (se ainda não foi feito)
+Se a pasta do seu projeto ainda não tem um repositório Git, rode este comando no terminal dentro da pasta do projeto:
+git init
+Isso inicializa o Git na pasta.
+
+3. Adicione o repositório remoto do GitHub
+No GitHub, vá até o repositório e copie o link HTTPS ou SSH. Depois, no terminal do VS Code, rode:
+git remote add origin URL_DO_SEU_REPO
+Exemplo (se estiver usando HTTPS):
+git remote add origin https://github.com/usuario/repositorio.git
+Se o repositório já estiver conectado e você quiser alterar o link, use:
+git remote set-url origin URL_DO_SEU_REPO
+
+4. Adicione os arquivos e faça um commit inicial
+Agora, adicione os arquivos e crie um commit:
+git add .
+git commit -m "Primeiro commit conectando VS Code ao GitHub"
+
+5. Envie para o GitHub
+Se o repositório do GitHub já tem arquivos, antes de enviar, rode:
+git pull origin main --rebase
+Agora, envie os arquivos do seu VS Code para o GitHub:
+git push -u origin main
+Caso o branch seja master, substitua main por master:
+git push -u origin master
+Depois disso, seu VS Code e GitHub estarão sincronizados. Agora, sempre que fizer mudanças, use:
+git add .
+git commit -m "Descrição da mudança"
+git push origin main
+
+https://github.com/LuisCesarPhoenix/Nodejs.git

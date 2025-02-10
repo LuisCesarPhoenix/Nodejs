@@ -1,0 +1,39 @@
+API PARA CONEXÃO COM BANCO DE DADOS 
+
+Esta api deve executar conexões com banco de dados basicamente conhecida com CRUD
+C -> CREATE
+R -> READ
+U -> UPDATE
+D -> DELETE
+
+O intuito é de forma básica gerar o entendimento dos verbos ( GET, POST, PUT, DELETE) em uma aplicação que pode ser reutilizada e também a manipulação de dados em banco de dados.
+Inicialmente vamos trabalhar apenas com MySQL como base de dados.
+Vamos seguir por etapas
+
+1 - Eu preciso criar um servidor nodejs express básico contendo uma rota básica para o primeiro acesso
+
+2 - Criar rotas GET para testar o acesso com retorno em json 
+a. rota get "/" retornando um json {message: "Olá Mundo!" } como no exemplo:
+app.get("/", function(req,res) {
+  res.status(200).json({message:"Olá Mundo!"});
+});
+b. rota get "/lista" que fará uma listagem de tarefas adicionadas
+
+
+3 - Conexão com banco de dados MySql 
+a. Criar uma classe para conexão com banco de dados MySQL ( necessário instalar module "mysql2");
+b. Adicionar métodos (funções) do CRUD read(), readOne(), create(), update(), delete()
+
+4 - Criar entidade tabela no banco de dados de "Usuarios"
+a. Colunas básicas "id, name, username, email, password"
+
+5 - Criar uma função ou Controller para tratar a insersão de dados na tabela "Usuarios" e adicionar criptografia para o campo password bcrypt para enviar a senha já criptografada para o banco
+
+6 - Criar função para autenticar o usuários consultando o usuário e password e retornar valor true ou false caso exista
+Metodo avançado
+Gerar token de acesso a usuário autenticado
+Criar rotas Privadas 
+Criar rotas publicas
+
+
+

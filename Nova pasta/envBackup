@@ -1,0 +1,52 @@
+# Criando um arquivo .env na raiz do projeto para configurar as variáveis de ambiente, como a porta do servidor 
+# e as credenciais do banco de dados. Configurando variáveis de ambiente para uma aplicação que conecta a um 
+# banco de dados MySQL. 
+# .env => Sistema de gerenciamento de variáveis de ambiente (com biblioteca dotenv para Node.js) 
+# para carregar as variáveis de forma segura.
+
+PORT=3000
+# Define a porta onde o servidor da aplicação vai rodar. Nesse caso, a aplicação vai ouvir na porta 3000. 
+# Isso é comum em servidores locais para desenvolvimento, mas, em produção, você pode precisar de outra porta, 
+# dependendo da configuração do seu servidor.
+
+DB_HOST=localhost
+# Define o host do banco de dados. O localhost significa que o banco de dados está rodando na mesma máquina 
+# em que a aplicação está sendo executada. Se você estivesse usando um servidor remoto, aqui ficaria o 
+# endereço do servidor (como db.example.com).
+
+DB_USER=******
+# Define o usuário do banco de dados que a aplicação vai utilizar para se conectar ao MySQL. O usuário root 
+# é o usuário administrador padrão, mas, em ambientes de produção, é recomendado criar um usuário com 
+# permissões restritas para maior segurança.
+
+DB_PASSWORD=*******
+# Define a senha do usuário do banco de dados. Lembre-se de que em 
+# um ambiente de produção, você deve usar senhas seguras e difíceis de adivinhar para evitar vulnerabilidades.
+
+DB_NAME=teste
+# Define o nome do banco de dados que será utilizado pela aplicação. No caso, o banco de dados é chamado 
+# teste. Em uma aplicação real, você deve usar um nome mais representativo para o banco de dados.
+
+# MONGO_URI_OLD=mongodb://localhost:27017/servidorA
+# MONGO_URI_NEW=mongodb://localhost:27017/servidorB
+# BATCH_SIZE=1000
+
+# MONGO_URI_OLD=mongodb://luiz_cesar:LuizCeS%40!@145.223.95.9:27017
+# MONGO_DB_OLD=uneel_unicomsi
+# MONGO_URI_NEW=mongodb://localhost:27017
+# MONGO_DB_NEW=servidor_A
+# MONGO_COLLECTION_OLD=test
+# MONGO_COLLECTION_NEW=cadastro_A
+# BATCH_SIZE=1000
+
+MONGO_URI_OLD=mongodb://localhost:27017
+MONGO_DB_OLD=servidor_A
+MONGO_COLLECTION_OLD=cadastro_A   # Origem (cadastro_A)
+MONGO_URI_NEW=mongodb://localhost:27018
+MONGO_DB_NEW=servidor_B
+MONGO_COLLECTION_NEW=cadastro_B   # Destino (cadastro_B)
+BATCH_SIZE=1000
+
+# BATCH_SIZE → Define o número de registros que serão transferidos por vez.
+# 1000 → O script de migração vai ler 1000 registros do servidor A, inserir no servidor B, e repetir até finalizar.
+# Isso ajuda a evitar sobrecarregar a memória e timeouts ao processar arquivos muito grandes.
