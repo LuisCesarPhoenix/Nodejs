@@ -1,4 +1,0 @@
-O que é melhor?
-Processar todos os arquivos da pasta work/ de uma vez sem precisar chamar a rota para cada um.
-Ou em vez de enviar um nome por vez, a API pode aceitar uma lista de arquivoa e envia um JSON como.
-"files": ["file1.csv", "file2.csv", "file3.csv"]
